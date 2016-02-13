@@ -58,14 +58,18 @@ void execute(char *input) {
     }
 }
 
-void setShellPath() {
+void setShellPath(char * shellPath) {
     const char *varname = "SHELL_PATH";
     char resolvedPath[PATH_MAX + 1] = {0};
-    // We use the /proc/self/exe symbolic link since the target host is a Linux
-    // machine and argv[0] may not contain the name of the program.
+    // We use the multiple methods to get the absolute path to the currently
+    // executing program:
+    // 1. /proc/self/exe - Works on Linux systems
+    // 2. argv[0] - Not fool proof but the assignment spec allows this
     if (realpath("/proc/self/exe", resolvedPath) == 0) {
-        printf("Failed to resolve real path of the shell.");
-        exit (1);
+        if (realpath(shellPath, resolvedPath) == 0) {
+            printf("Failed to resolve real path of the shell.");
+            exit (1);
+        }
     }
     if (setenv(varname, resolvedPath, 1) != 0) {
         printf("Failed to set environment variable.");
@@ -74,7 +78,7 @@ void setShellPath() {
 }
 
 int main(int argc, char ** argv) {
-    setShellPath();
+    setShellPath(argv[0]);
     while (1) {
         char *input = getInput();
         execute(input);
