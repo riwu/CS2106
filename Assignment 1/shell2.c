@@ -12,6 +12,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <limits.h>
 
 #define MAX_CHAR 1024
 
@@ -57,7 +58,23 @@ void execute(char *input) {
     }
 }
 
-int main() {
+void setShellPath() {
+    const char *varname = "SHELL_PATH";
+    char resolvedPath[PATH_MAX + 1] = {0};
+    // We use the /proc/self/exe symbolic link since the target host is a Linux
+    // machine and argv[0] may not contain the name of the program.
+    if (realpath("/proc/self/exe", resolvedPath) == 0) {
+        printf("Failed to resolve real path of the shell.");
+        exit (1);
+    }
+    if (setenv(varname, resolvedPath, 1) != 0) {
+        printf("Failed to set environment variable.");
+        exit(1);
+    }
+}
+
+int main(int argc, char ** argv) {
+    setShellPath();
     while (1) {
         char *input = getInput();
         execute(input);
