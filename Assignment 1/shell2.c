@@ -58,7 +58,7 @@ void execute(char *input) {
     }
 }
 
-void setShellPath(char * shellPath) {
+void setShellPath(char *shellPath) {
     const char *varname = "SHELL_PATH";
     char resolvedPath[PATH_MAX + 1] = {0};
     // We use the multiple methods to get the absolute path to the currently
@@ -68,7 +68,7 @@ void setShellPath(char * shellPath) {
     if (realpath("/proc/self/exe", resolvedPath) == 0) {
         if (realpath(shellPath, resolvedPath) == 0) {
             printf("Failed to resolve real path of the shell.");
-            exit (1);
+            exit(1);
         }
     }
     if (setenv(varname, resolvedPath, 1) != 0) {

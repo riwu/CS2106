@@ -32,7 +32,7 @@ int main(int argc, char *argv[], char *envp[]) {
     while(*envp) {
         char *address = strstr(*envp, substr);
         if (address && (address - *envp == 0)) { // ensures that it starts with
-             value = address + strlen(substr);   // envVariable
+            value = address + strlen(substr);    // envVariable
         }
         printf("%s\n", *envp++);
     }
