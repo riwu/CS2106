@@ -12,6 +12,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <errno.h>
 
 #define MAX_CHAR 1024
 
@@ -48,7 +49,7 @@ void execute(char *input) {
 
         char **argv = split(input);
         if (execvp(*argv, argv) < 0) {
-            printf("Shell error: : No such file or directory\n");
+            printf("Shell error: : %s\n", strerror(errno));
             exit(1);
         }
     } else {
