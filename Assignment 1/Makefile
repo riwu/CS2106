@@ -15,3 +15,5 @@ shell2:
 
 clean:
 	rm $(BUILDDIR)*
+
+$(shell mkdir -p $(BUILDDIR))
