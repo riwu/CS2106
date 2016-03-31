@@ -1,5 +1,5 @@
 CS2106 Operating Systems
-Assignment 2 – Processes and Threads
+Assignment 2 - Processes and Threads
 Answer Book
 Member 1 Name: Wang RiwuMember 1 Matric No: A0135766W
 Member 2 Name: Jeremy Heng Wen MingMember 2 Matric No: A0146789H
@@ -33,7 +33,7 @@ The values of ctr as printed by the threads are wrong. The reason is that the th
 
 Question 7
 
-The variable "i" must be cast into void * because that’s the data type of the parameter of pthread_create, hence it must be explicitly cast to the data type that matches the parameter type of the function.
+The variable "i" must be cast into void * because that is the data type of the parameter of pthread_create, hence it must be explicitly cast to the data type that matches the parameter type of the function.
 
 In child it does not have to be cast back into int because it is implicitly converted to int in printf using %d.
 
